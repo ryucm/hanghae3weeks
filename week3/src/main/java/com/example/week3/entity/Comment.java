@@ -24,6 +24,10 @@ public class Comment {
     @Column(nullable = false)
     private String content;
 
+    @ManyToOne
+    private Post post;
 
+    @ManyToOne
+    private Member member;
 
 }
