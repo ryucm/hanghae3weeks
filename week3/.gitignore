@@ -26,6 +26,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+## DB 데이터 ##
+week4_spring.mv.db
+week4_spring.lock.db
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
