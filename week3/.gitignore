@@ -29,7 +29,7 @@ out/
 ## DB 데이터 ##
 week4_spring.mv.db
 week4_spring.lock.db
-
+week4_spring.trace.db
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
