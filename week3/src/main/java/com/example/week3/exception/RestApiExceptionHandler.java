@@ -10,9 +10,11 @@ public class RestApiExceptionHandler {
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<?> handleApiRequestException(Exception e) {
+
         RestApiException restApiException = new RestApiException();
         restApiException.setHttpStatus(HttpStatus.BAD_REQUEST);
         restApiException.setErrorMessage(e.getMessage());
+
         return new ResponseEntity<>(restApiException, HttpStatus.BAD_REQUEST);
     }
 
