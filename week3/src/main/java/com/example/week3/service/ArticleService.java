@@ -1,12 +1,12 @@
 package com.example.week3.service;
 
-import com.example.week3.repository.PostRepository;
+import com.example.week3.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PostService {
+public class ArticleService {
 
-    private final PostRepository postRepository;
+    private final ArticleRepository postRepository;
 }

@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.constraints.Pattern;
+
 @RestControllerAdvice
 public class RestApiExceptionHandler {
 
@@ -14,8 +16,8 @@ public class RestApiExceptionHandler {
         RestApiException restApiException = new RestApiException();
         restApiException.setHttpStatus(HttpStatus.BAD_REQUEST);
         restApiException.setErrorMessage(e.getMessage());
-
         return new ResponseEntity<>(restApiException, HttpStatus.BAD_REQUEST);
+
     }
 
 }

@@ -1,6 +1,6 @@
 package com.example.week3.controller;
 
-import com.example.week3.service.PostService;
+import com.example.week3.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/post")
-public class PostController {
-    private final PostService postService;
+public class ArticleController {
+    private final ArticleService postService;
 }
 

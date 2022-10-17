@@ -1,4 +1,4 @@
-package com.example.week3.common;
+package com.example.week3.util;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

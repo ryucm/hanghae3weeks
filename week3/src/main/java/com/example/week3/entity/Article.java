@@ -1,20 +1,19 @@
 package com.example.week3.entity;
 
-import com.example.week3.common.TimeStamped;
+import com.example.week3.util.TimeStamped;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post extends TimeStamped {
+public class Article extends TimeStamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,17 +23,11 @@ public class Post extends TimeStamped {
     private String title;
 
     @Column(nullable = false)
-    private String author;
-
-    @Column(nullable = false)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
-
-    @OneToMany
-    private List<Comment> commentList;
 
 
 }
