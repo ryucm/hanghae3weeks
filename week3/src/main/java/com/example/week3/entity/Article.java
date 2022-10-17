@@ -34,4 +34,15 @@ public class Article extends TimeStamped {
         this.title = requestArticle.getTitle();
         this.content = requestArticle.getContent();
     }
+
+    public void update(String title, String content) {
+        if(this.title != title) {
+            this.title = title;
+        }
+        if(this.content != content) {
+            this.content = content;
+        }
+    }
+
+
 }

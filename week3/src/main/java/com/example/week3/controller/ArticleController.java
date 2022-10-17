@@ -12,11 +12,32 @@ import org.springframework.web.bind.annotation.*;
 public class ArticleController {
     private final ArticleService articleService;
 
-    // 게시글 작성
+    /*
+     * 게시글 생성
+     */
     @PostMapping()
     public Article article(@RequestBody ArticleRequestDto requestDto) {
         return articleService.article(requestDto);
     }
+
+    /*
+     * 게시글 수정
+     */
+    @PutMapping("/{articleId}")
+    public Article update(@PathVariable("articleId") Long id, @RequestBody ArticleRequestDto requestDto) {
+        return articleService.update(id, requestDto);
+    }
+
+    /*
+     * 게시글 삭제
+     */
+    @DeleteMapping("/{articleId}")
+    public Article delete(@PathVariable("articleId") Long id) {
+        return articleService.delete(id);
+    }
+
+
+
 
 }
 
