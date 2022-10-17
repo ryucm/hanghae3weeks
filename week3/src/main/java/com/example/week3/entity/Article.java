@@ -1,5 +1,6 @@
 package com.example.week3.entity;
 
+import com.example.week3.dto.request.ArticleRequestDto;
 import com.example.week3.util.TimeStamped;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,5 +30,8 @@ public class Article extends TimeStamped {
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
-
+    public Article(ArticleRequestDto requestArticle) {
+        this.title = requestArticle.getTitle();
+        this.content = requestArticle.getContent();
+    }
 }
