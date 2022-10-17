@@ -3,15 +3,12 @@ package com.example.week3.entity;
 import com.example.week3.dto.request.ArticleRequestDto;
 import com.example.week3.util.TimeStamped;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Getter
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Article extends TimeStamped {
@@ -43,6 +40,4 @@ public class Article extends TimeStamped {
             this.content = content;
         }
     }
-
-
 }

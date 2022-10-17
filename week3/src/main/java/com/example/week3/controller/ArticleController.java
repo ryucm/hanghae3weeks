@@ -17,7 +17,7 @@ public class ArticleController {
     /*
      * 게시글 전체 조회
      */
-    @GetMapping()
+    @GetMapping
     public List<Article> selectAll() {
         return articleService.saveAll();
     }
@@ -33,7 +33,7 @@ public class ArticleController {
     /*
      * 게시글 생성
      */
-    @PostMapping()
+    @PostMapping
     public Article article(@RequestBody ArticleRequestDto requestDto) {
         return articleService.article(requestDto);
     }
@@ -50,8 +50,8 @@ public class ArticleController {
      * 게시글 삭제
      */
     @DeleteMapping("/{articleId}")
-    public Article delete(@PathVariable("articleId") Long id) {
-        return articleService.delete(id);
+    public void delete(@PathVariable("articleId") Long id) {
+        articleService.delete(id);
     }
 
 }

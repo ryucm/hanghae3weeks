@@ -18,6 +18,7 @@ public class ArticleService {
     /*
      * 게시글 단일 조회
      */
+
     public Article findArticle(Long id) {
         Article article = articleRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("잘못된 요청입니다.")
@@ -36,6 +37,7 @@ public class ArticleService {
     /*
      * 게시글 등록
      */
+    @Transactional
     public Article article(ArticleRequestDto requestArticle) {
         Article article = new Article(requestArticle);
         return articleRepository.save(article);
@@ -63,11 +65,11 @@ public class ArticleService {
      * 게시글 삭제
      */
     @Transactional
-    public Article delete(Long id) {
+    public void delete(Long id) {
         Article article = articleRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("잘못된 요청입니다.")
         );
 
-        return articleRepository.delete(id);
+        articleRepository.deleteById(id);
     }
 }
