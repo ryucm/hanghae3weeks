@@ -6,11 +6,29 @@ import com.example.week3.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/article")
 public class ArticleController {
     private final ArticleService articleService;
+
+    /*
+     * 게시글 전체 조회
+     */
+    @GetMapping()
+    public List<Article> selectAll() {
+        return articleService.saveAll();
+    }
+
+    /*
+     * 게시글 단일 조회
+     */
+    @GetMapping("/{articleId}")
+    public Article findArticle(@PathVariable("articleId") Long id) {
+        return articleService.findArticle(id);
+    }
 
     /*
      * 게시글 생성
@@ -35,9 +53,6 @@ public class ArticleController {
     public Article delete(@PathVariable("articleId") Long id) {
         return articleService.delete(id);
     }
-
-
-
 
 }
 

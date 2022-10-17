@@ -7,12 +7,31 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+
+    /*
+     * 게시글 단일 조회
+     */
+    public Article findArticle(Long id) {
+        Article article = articleRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("잘못된 요청입니다.")
+        );
+
+        return article;
+    }
+
+    /*
+     * 게시글 전체조회
+     */
+    public List<Article> saveAll() {
+        return articleRepository.findAll();
+    }
 
     /*
      * 게시글 등록
