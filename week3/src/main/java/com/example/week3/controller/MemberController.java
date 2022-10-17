@@ -12,3 +12,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     private final MemberService memberService;
 }
+
+//창민 시작한다.
