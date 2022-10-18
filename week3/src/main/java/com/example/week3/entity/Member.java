@@ -29,5 +29,9 @@ public class Member extends TimeStamped {
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     private Authority authority;
+
+    public boolean isEqual(Member other) {
+        return this.id.equals(other.getId());
+    }
 }
 
