@@ -1,20 +1,26 @@
 package com.example.week3.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
+@Entity
 @Builder
 @AllArgsConstructor
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "MEMBER_ID", "ARTICLE_ID" }) })
+@NoArgsConstructor
+@Table(
+        name = "constraintMemberArticle",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "MEMBER_ID", "ARTICLE_ID" }
+                )
+        }
+        )
 public class Heart {
 
-    @Column(name = "MEMBER_ID")
-    private Member member;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "ARTICLE_ID")
-    private Article article;
+
 }
