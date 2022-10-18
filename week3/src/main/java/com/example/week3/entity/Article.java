@@ -27,9 +27,10 @@ public class Article extends TimeStamped {
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
-    public Article(ArticleRequestDto requestArticle) {
+    public Article(ArticleRequestDto requestArticle, Member member) {
         this.title = requestArticle.getTitle();
         this.content = requestArticle.getContent();
+        this.member = member;
     }
 
     public void update(String title, String content) {
