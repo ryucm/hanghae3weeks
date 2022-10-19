@@ -1,5 +1,6 @@
 package com.example.week3.entity;
 
+import com.example.week3.dto.request.CommentRequestDto;
 import com.example.week3.util.TimeStamped;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,4 +31,8 @@ public class Comment extends TimeStamped {
     @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
+    public void update(CommentRequestDto requestDto) {
+        // No need to update other fields
+        this.content = requestDto.getContent();
+    }
 }
