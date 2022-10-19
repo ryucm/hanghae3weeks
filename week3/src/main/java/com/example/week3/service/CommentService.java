@@ -1,7 +1,6 @@
 package com.example.week3.service;
 
 import com.example.week3.dto.request.CommentRequestDto;
-import com.example.week3.dto.request.MemberRequestDto;
 import com.example.week3.dto.response.CommentResponseDto;
 import com.example.week3.dto.response.ResponseDto;
 import com.example.week3.entity.Article;
@@ -23,8 +22,6 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
-    private final HeartRepository heartRepository;
-//    private final ServiceUtil serviceUtil;
 
     public ResponseDto<?> createComment(Long articleId, CommentRequestDto requestDto, MemberDetailsImpl memberDetails) {
         // validate article
@@ -35,8 +32,7 @@ public class CommentService {
         }
 
         // validate member
-        MemberRequestDto memberRequestDto = requestDto.getMemberRequestDto();
-        Member member = memberRepository.findByNickname(memberRequestDto.getNickname()).orElse(null);
+        Member member = memberRepository.findByNickname(memberDetails.getUsername()).orElse(null);
 
         if (member == null) {
             return ResponseDto.fail("NULL_POINTER", "Member does not exist");
@@ -94,33 +90,5 @@ public class CommentService {
         return ResponseDto.success("Comment successfuly deleted");
     }
 
-    public ResponseDto<?> heartArticle(Long articleId, MemberDetailsImpl memberDetails) {
 
-        // validate article
-        Article article = articleRepository.findById(articleId).orElseThrow(null);
-        // TODO: need to extract member information from request
-        // previously implemented in serviceUtil
-        // this member is the one who is liking/unliking the post
-
-        if (article == null) {
-            return ResponseDto.fail("INVALID_ARTICLE_ID", "Article does not exist");
-        }
-
-        Member member = memberDetails.getMember();
-
-        // heart/unheart the article
-        if (! heartRepository.existsByMemberAndArticle(member, article)) {
-            // like the article
-            Heart heart = Heart.builder()
-                    .member(member)
-                    .article(article)
-                    .build();
-            heartRepository.save(heart);
-            return ResponseDto.success("Member liked the article");
-        } else {
-            Heart heart = heartRepository.findByMemberAndArticle(member, article).orElse(null);
-            heartRepository.deleteById(heart.getId());
-            return ResponseDto.success("Member unliked the article");
-        }
-    }
 }

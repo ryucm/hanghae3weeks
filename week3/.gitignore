@@ -30,6 +30,7 @@ out/
 week4_spring.mv.db
 week4_spring.lock.db
 week4_spring.trace.db
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

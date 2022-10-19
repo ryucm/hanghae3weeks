@@ -23,6 +23,15 @@ public class ArticleController {
     }
 
     /*
+     * 게시글 생성
+     */
+    @PostMapping
+    public ResponseDto<?> article(@RequestBody ArticleRequestDto requestDto, @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
+        return articleService.article(requestDto, memberDetails);
+    }
+
+
+    /*
      * 게시글 단일 조회
      */
     @GetMapping("/{articleId}")
@@ -30,13 +39,6 @@ public class ArticleController {
         return ResponseDto.success(articleService.findArticle(id));
     }
 
-    /*
-     * 게시글 생성
-     */
-    @PostMapping
-    public ResponseDto<?> article(@RequestBody ArticleRequestDto requestDto, @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
-        return articleService.article(requestDto, memberDetails);
-    }
 
     /*
      * 게시글 수정
