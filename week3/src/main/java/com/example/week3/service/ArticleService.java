@@ -2,9 +2,14 @@ package com.example.week3.service;
 
 import com.example.week3.dto.request.ArticleRequestDto;
 import com.example.week3.dto.response.ArticleResponseDto;
+import com.example.week3.dto.response.CommentResponseDto;
 import com.example.week3.dto.response.ResponseDto;
 import com.example.week3.entity.Article;
+import com.example.week3.entity.Comment;
+import com.example.week3.entity.Heart;
 import com.example.week3.repository.ArticleRepository;
+import com.example.week3.repository.CommentRepository;
+import com.example.week3.repository.HeartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +22,8 @@ import java.util.List;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
-
+    private final CommentRepository commentRepository;
+    private final HeartRepository heartRepository;
     /*
      * 게시글 단일 조회
      */
@@ -28,7 +34,18 @@ public class ArticleService {
             return ResponseDto.fail("Invalied id", "Article id를 찾을 수 없음");
         }
 
+        List<Comment> commentList = commentRepository.findAllByArticle(article);
+
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
+        for (Comment comment : commentList) {
+            commentResponseDtoList.add(new CommentResponseDto(comment));
+        }
+
+        List<Heart> heartList = heartRepository.findAllByArticle(article);
+
         ArticleResponseDto articleResponseDto = new ArticleResponseDto(article);
+        articleResponseDto.updateArticle(heartList, commentResponseDtoList);
 
         return ResponseDto.success(articleResponseDto);
     }
@@ -36,13 +53,27 @@ public class ArticleService {
     /*
      * 게시글 전체조회
      */
-    public ResponseDto<?> saveAll() {
+    public ResponseDto<?> findAllArticle() {
         List<Article> findArticleList = articleRepository.findAll();
 
         List<ArticleResponseDto> articleResponseDtoList = new ArrayList<>();
 
-        for (Article article : findArticleList) {
-            articleResponseDtoList.add(new ArticleResponseDto(article));
+
+
+
+        for (int i = 0; i < findArticleList.size(); i++) {
+            articleResponseDtoList.add(new ArticleResponseDto(findArticleList.get(i)));
+
+            List<Comment> commentList = commentRepository.findAllByArticle(findArticleList.get(i));
+
+            List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
+            for (Comment comment : commentList) {
+                commentResponseDtoList.add(new CommentResponseDto(comment));
+            }
+
+            List<Heart> heartList = heartRepository.findAllByArticle(findArticleList.get(i));
+            articleResponseDtoList.get(i).updateArticle(heartList, commentResponseDtoList);
         }
 
         return ResponseDto.success(articleResponseDtoList);

@@ -16,7 +16,7 @@ public class ArticleController {
 
     @GetMapping
     public ResponseDto<?> selectAll() {
-        return ResponseDto.success(articleService.saveAll());
+        return articleService.findAllArticle();
     }
 
     @PostMapping

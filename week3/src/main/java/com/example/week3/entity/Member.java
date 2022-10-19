@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 
 @Getter
 @Entity
@@ -22,6 +24,9 @@ public class Member extends TimeStamped {
 
     @Column(nullable = false)
     private String nickname;
+
+    @Column(nullable = false)
+    private String email;
 
     @Column(nullable = false)
     private String password;

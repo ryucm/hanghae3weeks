@@ -47,6 +47,7 @@ public class MemberService {
         Member member = new Member().builder()
                 .nickname(memberRequestDto.getNickname())
                 .password(passwordEncoder.encode(memberRequestDto.getPassword()))
+                .email(memberRequestDto.getEmail())
                 .authority(Authority.ROLE_USER)
                 .build();
 
