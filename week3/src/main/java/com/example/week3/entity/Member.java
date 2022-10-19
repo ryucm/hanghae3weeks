@@ -1,6 +1,7 @@
 package com.example.week3.entity;
 
 import com.example.week3.util.TimeStamped;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,5 +25,13 @@ public class Member extends TimeStamped {
 
     @Column(nullable = false)
     private String password;
+
+    @JsonIgnore
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
+    public boolean isEqual(Member other) {
+        return this.id.equals(other.getId());
+    }
 }
 
