@@ -1,12 +1,15 @@
 package com.example.week3.service;
 
 import com.example.week3.dto.request.ArticleRequestDto;
+import com.example.week3.dto.response.ArticleResponseDto;
+import com.example.week3.dto.response.ResponseDto;
 import com.example.week3.entity.Article;
 import com.example.week3.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,58 +21,84 @@ public class ArticleService {
     /*
      * 게시글 단일 조회
      */
+    public ResponseDto<?> findArticle(Long id) {
+        Article article = articleRepository.findById(id).orElse(null);
 
-    public Article findArticle(Long id) {
-        Article article = articleRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("잘못된 요청입니다.")
-        );
+        if(article == null ) {
+            return ResponseDto.fail("Invalied id", "Article id를 찾을 수 없음");
+        }
 
-        return article;
+        ArticleResponseDto articleResponseDto = new ArticleResponseDto(article);
+
+        return ResponseDto.success(articleResponseDto);
     }
 
     /*
      * 게시글 전체조회
      */
-    public List<Article> saveAll() {
-        return articleRepository.findAll();
+    public ResponseDto<?> saveAll() {
+        ArrayList<Article> findArticles = articleRepository.findAll();
+
+        List<ArticleResponseDto> articles = new ArrayList<>();
+        for (Article article : findArticles) {
+            articles.add(new ArticleResponseDto(article));
+        }
+
+        return ResponseDto.success(articles);
     }
 
     /*
      * 게시글 등록
      */
     @Transactional
-    public Article article(ArticleRequestDto requestArticle) {
-        Article article = new Article(requestArticle);
-        return articleRepository.save(article);
+    public ResponseDto<?> article(ArticleRequestDto requestArticle, MemberDetailsImpl memberDetails) {
+        Article article = new Article(requestArticle, memberDetails.getMember());
+        articleRepository.save(article);
+        return ResponseDto.success("성공적으로 저장했습니다.");
     }
 
     /*
      * 게시글 수정
      */
     @Transactional
-    public Article update(Long id, ArticleRequestDto requestDto) {
+    public ResponseDto<?> update(Long id, ArticleRequestDto requestDto, MemberDetailsImpl memberDetails) {
 
-        Article article = articleRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("잘못된 요청입니다.")
-        );
+        Article article = articleRepository.findById(id).orElse(null);
 
-        String title = requestDto.getTitle();
-        String content = requestDto.getContent();
+        if(article == null) {
+            return ResponseDto.fail("Invalied id", "수정할 게시글이 없음");
+        }
 
-        article.update(title,content);
+        if(article.getMember().getId().equals(memberDetails.getMember().getId())) {
+            String title = requestDto.getTitle();
+            String content = requestDto.getContent();
 
-        return articleRepository.save(article);
+            article.update(title,content);
+
+            articleRepository.save(article);
+            return ResponseDto.success("성공");
+        } else {
+            return ResponseDto.fail("수정권한이 없어","수정권한이 없어요");
+        }
     }
 
     /*
      * 게시글 삭제
      */
     @Transactional
-    public void delete(Long id) {
-        Article article = articleRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("잘못된 요청입니다.")
-        );
+    public ResponseDto<?> delete(Long id, MemberDetailsImpl memberDetails) {
+        Article article = articleRepository.findById(id).orElse(null);
 
-        articleRepository.deleteById(id);
+        if(article == null) {
+            return ResponseDto.fail("해당 게시글이 없어요","게시글 없음!");
+        }
+
+        if(article.getMember().getId().equals(memberDetails.getMember().getId())) {
+            articleRepository.deleteById(id);
+            return ResponseDto.success("삭제성공");
+        } else {
+            return ResponseDto.fail("권한이 없어요","권한없음");
+        }
     }
+
 }

@@ -1,16 +1,16 @@
 package com.example.week3.controller;
 
 import com.example.week3.dto.request.ArticleRequestDto;
-import com.example.week3.entity.Article;
+import com.example.week3.dto.response.ResponseDto;
 import com.example.week3.service.ArticleService;
+import com.example.week3.service.MemberDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/article")
+@RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
 
@@ -18,40 +18,40 @@ public class ArticleController {
      * 게시글 전체 조회
      */
     @GetMapping
-    public List<Article> selectAll() {
-        return articleService.saveAll();
+    public ResponseDto<?> selectAll() {
+        return ResponseDto.success(articleService.saveAll());
     }
 
     /*
      * 게시글 단일 조회
      */
     @GetMapping("/{articleId}")
-    public Article findArticle(@PathVariable("articleId") Long id) {
-        return articleService.findArticle(id);
+    public ResponseDto<?> findArticle(@PathVariable("articleId") Long id) {
+        return ResponseDto.success(articleService.findArticle(id));
     }
 
     /*
      * 게시글 생성
      */
     @PostMapping
-    public Article article(@RequestBody ArticleRequestDto requestDto) {
-        return articleService.article(requestDto);
+    public ResponseDto<?> article(@RequestBody ArticleRequestDto requestDto, @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
+        return articleService.article(requestDto, memberDetails);
     }
 
     /*
      * 게시글 수정
      */
     @PutMapping("/{articleId}")
-    public Article update(@PathVariable("articleId") Long id, @RequestBody ArticleRequestDto requestDto) {
-        return articleService.update(id, requestDto);
+    public ResponseDto<?> update(@PathVariable("articleId") Long id, @RequestBody ArticleRequestDto requestDto, @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
+        return articleService.update(id, requestDto,memberDetails);
     }
 
     /*
      * 게시글 삭제
      */
     @DeleteMapping("/{articleId}")
-    public void delete(@PathVariable("articleId") Long id) {
-        articleService.delete(id);
+    public ResponseDto<?> delete(@PathVariable("articleId") Long id, @AuthenticationPrincipal MemberDetailsImpl memberDetails) {
+        return articleService.delete(id, memberDetails);
     }
 
 }
