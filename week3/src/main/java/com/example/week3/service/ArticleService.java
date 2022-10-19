@@ -90,7 +90,7 @@ public class ArticleService {
         Article article = articleRepository.findById(id).orElse(null);
 
         if(article == null) {
-            ResponseDto.fail("해당 게시글이 없어요","게시글 없음!");
+            return ResponseDto.fail("해당 게시글이 없어요","게시글 없음!");
         }
 
         if(article.getMember().getId().equals(memberDetails.getMember().getId())) {
