@@ -37,14 +37,15 @@ public class ArticleService {
      * 게시글 전체조회
      */
     public ResponseDto<?> saveAll() {
-        ArrayList<Article> findArticles = articleRepository.findAll();
+        List<Article> findArticleList = articleRepository.findAll();
 
-        List<ArticleResponseDto> articles = new ArrayList<>();
-        for (Article article : findArticles) {
-            articles.add(new ArticleResponseDto(article));
+        List<ArticleResponseDto> articleResponseDtoList = new ArrayList<>();
+
+        for (Article article : findArticleList) {
+            articleResponseDtoList.add(new ArticleResponseDto(article));
         }
 
-        return ResponseDto.success(articles);
+        return ResponseDto.success(articleResponseDtoList);
     }
 
     /*

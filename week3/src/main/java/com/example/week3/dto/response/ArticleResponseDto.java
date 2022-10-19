@@ -10,11 +10,11 @@ import lombok.Getter;
 public class ArticleResponseDto {
     private String title;
     private String content;
-    private Member member;
+    private String author;
 
     public ArticleResponseDto(Article article) {
         this.title = article.getTitle();
         this.content = article.getContent();
-        this.member = article.getMember();
+        this.author = article.getMember().getNickname();
     }
 }
